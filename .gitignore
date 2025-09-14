@@ -1,0 +1,8 @@
+# Compiled executable
+robdd
+
+# Object files
+*.o
+
+# VSCode specific
+.vscode/
