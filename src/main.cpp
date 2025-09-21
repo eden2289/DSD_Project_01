@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     std::cout << "[OK] Parsing successful." << std::endl;
     printParseResult(parser); // (Optional) Print parsed results for verification.
 
-    // 2. Build OBDD first (no on-the-fly reduction), write OBDD DOT.
+    // 2. Build OBDD first
     RobddManager mgr;
     std::cout << "[Info] Building OBDD ..." << std::endl;
     if (!mgr.buildObddFromPla(parser)) {
