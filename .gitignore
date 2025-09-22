@@ -6,3 +6,8 @@ robdd
 
 # VSCode specific
 .vscode/
+
+# Generated directories
+build/
+dot/
+png/
