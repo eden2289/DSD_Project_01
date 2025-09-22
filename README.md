@@ -2,12 +2,33 @@
 
 This program reads a single-output Boolean function in PLA format, builds an OBDD with a fixed variable order, reduces it to an ROBDD, and outputs DOT files for visualization.
 
-Quick run
-- Build: `make`
-- Example: `./robdd pla_files/input.pla output.dot`
-- PNGs (requires Graphviz):
-  - `dot -Tpng output_obdd.dot -o obdd_graph.png`
-  - `dot -Tpng output.dot -o graph.png`
+## Quick Run & Makefile Features
+
+The `Makefile` provides several convenient targets:
+
+- **Build the executable:**
+  ```
+  make
+  ```
+
+- **Build and run for a specific PLA file:**
+  This is the fastest way to get results. The command will create `dot/<pla_name>_obdd.dot` and `dot/<pla_name>_robdd.dot`.
+  ```
+  make dot/test1.dot  # Example for pla_files/test1.pla
+  make dot/my4.dot    # Example for pla_files/my4.pla
+  ```
+
+- **Generate all PNGs from DOT files:**
+  This will find all `.dot` files in the `dot/` directory and generate corresponding PNG images in the `png/` directory.
+  ```
+  make png
+  ```
+
+- **Clean up generated files:**
+  This removes the `robdd` executable, and all files in the `build/`, `dot/`, and `png/` directories.
+  ```
+  make clean
+  ```
 
 ## Build and Run
 - Dependencies: g++ (C++17), make. For visualization: Graphviz (`sudo apt-get install graphviz`).
@@ -24,6 +45,23 @@ make
 dot -Tpng output_obdd.dot -o obdd_graph.png
 dot -Tpng output.dot -o graph.png
 ```
+
+## Manual Execution
+
+If you prefer to run the program manually after building it with `make`:
+
+- **Command:** `./robdd <PLA_FILE> <OUTPUT_DOT_PREFIX>`
+- **Example:**
+  ```
+  ./robdd pla_files/input.pla dot/output
+  ```
+  This creates `dot/output_obdd.dot` and `dot/output_robdd.dot`.
+
+- **Visualize a single DOT file (requires Graphviz):**
+  ```
+  dot -Tpng dot/output_obdd.dot -o png/output_obdd.png
+  dot -Tpng dot/output_robdd.dot -o png/output_robdd.png
+  ```
 
 ## Supported PLA format
 The parser supports a simplified PLA:
@@ -143,6 +181,10 @@ tar czf B12345678.tgz -C submit .
 - `output_obdd.dot`, `output.dot`: default outputs from running the example
 
 ## 中文簡述
+- **推薦用法**：使用 `Makefile` 提供的快捷指令。
+  - `make dot/test1.dot`：直接從 `pla_files/test1.pla` 產生對應的 `.dot` 檔案。
+  - `make png`：將 `dot/` 目錄下所有的 `.dot` 檔轉成 `png/` 目錄下的圖檔。
+  - `make clean`：清除所有編譯產生和測試輸出的檔案。
 - 先用 PLA 建 OBDD（固定變數順序），再依兩個規則化簡成 ROBDD：
   1) 若 then/else 指到同一個子圖，刪除該測試。
   2) 具有相同 `(變數, else, then)` 的節點合併。
